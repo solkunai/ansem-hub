@@ -1,25 +1,38 @@
+import { useWallet } from '@solana/wallet-adapter-react'
 import { Card } from '../components/ui/Card'
 import { Sparkline } from '../components/Sparkline'
-import { mockWallet } from '../lib/mock'
+import { useHolderVerification } from '../hooks/useHolderVerification'
+import { mockWallet, mockGlobal } from '../lib/mock'
 import { formatNumber, formatUsd, formatPercent, shortenAddress } from '../lib/format'
 
 export default function Dashboard() {
   const w = mockWallet
+  const { publicKey } = useWallet()
+  const { balance, loading } = useHolderVerification()
+
+  const isLive = balance != null
+  const address = publicKey?.toBase58() ?? w.address
+  const bal = isLive ? balance : w.balance
+  const valueUsd = isLive ? balance * mockGlobal.ansemPrice : w.valueUsd
 
   return (
     <div className="space-y-4">
       {/* Balance card */}
       <Card accent className="bg-gradient-to-br from-[#0d130d] to-panel">
         <div className="flex items-center justify-between">
-          <span className="text-[10px] uppercase tracking-wider text-ink-muted">your bag</span>
+          <span className="text-[10px] uppercase tracking-wider text-ink-muted">
+            your bag{!isLive && ' · sample'}
+          </span>
           <span className="tnum rounded-pill border border-line bg-raised px-2.5 py-1 text-xs text-ink-secondary">
-            {shortenAddress(w.address)}
+            {shortenAddress(address)}
           </span>
         </div>
-        <div className="disp tnum mt-3 text-5xl text-ink-primary">{formatNumber(w.balance)}</div>
+        <div className="disp tnum mt-3 text-5xl text-ink-primary">
+          {loading ? '…' : formatNumber(bal)}
+        </div>
         <div className="mt-1">
           <span className="disp text-green">$ANSEM</span>
-          <span className="tnum ml-2 text-sm text-ink-secondary">≈ {formatUsd(w.valueUsd)}</span>
+          <span className="tnum ml-2 text-sm text-ink-secondary">≈ {formatUsd(valueUsd)}</span>
         </div>
       </Card>
 
