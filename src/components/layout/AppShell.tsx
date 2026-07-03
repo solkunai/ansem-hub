@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom'
 import { Header } from './Header'
 import { PriceStrip } from './PriceStrip'
 import { BottomNav } from './BottomNav'
+import { Footer } from './Footer'
 
 export function AppShell() {
   return (
@@ -12,6 +13,7 @@ export function AppShell() {
       </div>
       <main className="flex-1 px-4 pb-24 pt-4 sm:px-6 sm:pb-12">
         <Outlet />
+        <Footer />
       </main>
       <BottomNav />
     </div>

@@ -234,7 +234,7 @@ function PnlCell({
   return (
     <div className="bg-panel p-3">
       <div className="text-[10px] uppercase tracking-wider text-ink-muted">{label}</div>
-      <div className={`disp tnum mt-1 text-lg text-ink-primary ${valueClassName ?? ''}`}>{value}</div>
+      <div className={`disp tnum mt-1 text-lg ${valueClassName ?? 'text-ink-primary'}`}>{value}</div>
     </div>
   )
 }

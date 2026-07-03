@@ -211,7 +211,7 @@ function Stat({
   return (
     <div className="bg-[#0a0d0a] px-3 py-3">
       <div className="text-[9px] uppercase tracking-wider text-ink-muted">{label}</div>
-      <div className={cn('disp tnum mt-1 text-sm text-ink-primary', valueClassName)}>{value}</div>
+      <div className={cn('disp tnum mt-1 text-sm', valueClassName ?? 'text-ink-primary')}>{value}</div>
       {sub && <div className="tnum mt-0.5 text-[10px] text-ink-muted">{sub}</div>}
     </div>
   )

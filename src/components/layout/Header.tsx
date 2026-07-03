@@ -7,7 +7,7 @@ import { cn } from '../../lib/cn'
 const navLinks = [
   { to: '/', label: 'trenches', end: true },
   { to: '/dashboard', label: 'dashboard', end: false },
-  { to: '/leaderboard', label: 'leaderboard', end: false },
+  { to: '/leaderboard', label: 'holders', end: false },
   { to: '/airdrops', label: 'airdrops', end: false },
   { to: '/creators', label: 'creators', end: false },
 ]
