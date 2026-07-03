@@ -26,8 +26,8 @@ export default {
         },
         ink: {
           primary: '#F2F4F0',
-          secondary: '#9aa39a',
-          muted: '#717a71',
+          secondary: '#E4E7E2',
+          muted: '#D3D6D1',
           faint: '#5a615a',
         },
       },
@@ -50,8 +50,8 @@ export default {
           '100%': { transform: 'translateX(-50%)' },
         },
         breathe: {
-          '0%, 100%': { opacity: '0.12', transform: 'scale(1)' },
-          '50%': { opacity: '0.2', transform: 'scale(1.015)' },
+          '0%, 100%': { opacity: '0.85', transform: 'scale(1)' },
+          '50%': { opacity: '1', transform: 'scale(1.015)' },
         },
       },
       animation: {

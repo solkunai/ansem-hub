@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Card } from '../components/ui/Card'
 import { LiveDot } from '../components/ui/LiveDot'
 import { ProgressBar } from '../components/ui/ProgressBar'
@@ -8,7 +9,7 @@ import { useCountUp } from '../hooks/useCountUp'
 import { useCreatorHoldings } from '../hooks/useCreatorHoldings'
 import { useMarket } from '../providers/MarketProvider'
 import { mockGlobal, mockRace } from '../lib/mock'
-import { ANSEM_CREATOR_WALLET, HOLDER_GOAL, MARKET_CAP_GOAL } from '../lib/ansem'
+import { ANSEM_CREATOR_WALLET, DEV_DONATION_WALLET, HOLDER_GOAL, MARKET_CAP_GOAL } from '../lib/ansem'
 import { formatNumber, formatCompact, formatUsd, shortenAddress } from '../lib/format'
 
 export default function Landing() {
@@ -51,14 +52,14 @@ export default function Landing() {
       {/* Holder counter hero */}
       <div className="relative overflow-hidden rounded-card border border-line">
         <img
-          src="/black-bull.jpg"
+          src="/ansem-bull-green.png"
           alt=""
           className="absolute inset-0 h-full w-full object-cover object-top animate-breathe"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/10 to-transparent" />
         <div className="relative flex min-h-[280px] flex-col justify-end p-5">
           <span className="flex items-center gap-2 text-xs uppercase tracking-wider text-ink-secondary">
-            <LiveDot color="green" /> the trenches are live
+            <LiveDot color="green" /> road to 1m holders
           </span>
           <div className="disp tnum mt-3 text-6xl leading-none text-ink-primary">
             {formatNumber(holders)}
@@ -112,6 +113,37 @@ export default function Landing() {
 
       {/* Swap widget */}
       <SwapWidget />
+
+      {/* Donate to dev */}
+      <DonateCard />
+    </div>
+  )
+}
+
+function DonateCard() {
+  const [copied, setCopied] = useState(false)
+
+  async function copy() {
+    await navigator.clipboard.writeText(DEV_DONATION_WALLET)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }
+
+  return (
+    <div className="rounded-card border border-dashed border-green/40 bg-[#0a0d0a] p-4">
+      <div className="flex items-center gap-2">
+        <span className="disp text-base uppercase text-ink-primary">donate ansem to dev</span>
+      </div>
+      <p className="mt-1.5 text-sm text-ink-secondary">
+        send ANSEM to support the dev — 50% of donations go straight back out as ANSEM giveaways.
+      </p>
+      <button
+        onClick={copy}
+        className="tnum mt-3 flex w-full items-center justify-between rounded-cell border border-line bg-raised px-3 py-2 text-sm text-ink-primary hover:border-green"
+      >
+        <span>{shortenAddress(DEV_DONATION_WALLET)}</span>
+        <span className={copied ? 'text-green' : 'text-ink-muted'}>{copied ? 'copied ✓' : 'copy ⧉'}</span>
+      </button>
     </div>
   )
 }
