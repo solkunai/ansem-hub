@@ -1,6 +1,7 @@
 const DEX_TOKENS = 'https://api.dexscreener.com/latest/dex/tokens'
 
 interface DexPair {
+  pairAddress?: string
   baseToken?: { address?: string }
   quoteToken?: { symbol?: string }
   priceUsd?: string
@@ -15,6 +16,7 @@ export interface TokenMarket {
   priceUsd: number
   marketCap: number
   volume24h: number
+  pairAddress: string | null
 }
 
 export interface MarketSnapshot {
@@ -60,6 +62,7 @@ function pickBase(pairs: DexPair[], mint: string): TokenMarket | null {
     priceUsd: parseFloat(top.priceUsd ?? '0'),
     marketCap: top.marketCap ?? top.fdv ?? 0,
     volume24h: top.volume?.h24 ?? 0,
+    pairAddress: top.pairAddress ?? null,
   }
 }
 

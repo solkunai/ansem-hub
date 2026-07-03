@@ -47,7 +47,7 @@ export default function Creators() {
   return (
     <div className="space-y-4">
       <div className="flex items-baseline justify-between">
-        <h1 className="disp text-2xl text-ink-primary">creators</h1>
+        <h1 className="disp text-2xl uppercase text-ink-primary">creators</h1>
         <span className="tnum text-xs text-ink-muted">shill $ANSEM, earn points</span>
       </div>
 

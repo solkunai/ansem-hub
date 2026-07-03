@@ -1,9 +1,9 @@
-import { useWalletModal } from '@solana/wallet-adapter-react-ui'
 import { Card } from '../components/ui/Card'
 import { LiveDot } from '../components/ui/LiveDot'
 import { ProgressBar } from '../components/ui/ProgressBar'
 import { StatCell } from '../components/ui/StatCell'
 import { SwapWidget } from '../components/SwapWidget'
+import { PriceChart } from '../components/PriceChart'
 import { useCountUp } from '../hooks/useCountUp'
 import { useCreatorHoldings } from '../hooks/useCreatorHoldings'
 import { useMarket } from '../providers/MarketProvider'
@@ -12,7 +12,6 @@ import { ANSEM_CREATOR_WALLET, HOLDER_GOAL, MARKET_CAP_GOAL } from '../lib/ansem
 import { formatNumber, formatCompact, formatUsd, shortenAddress } from '../lib/format'
 
 export default function Landing() {
-  const { setVisible } = useWalletModal()
   const market = useMarket()
   const creator = useCreatorHoldings()
   const holders = useCountUp(market.ansemHolders)
@@ -21,12 +20,12 @@ export default function Landing() {
 
   return (
     <div className="space-y-4">
-      {/* Race to $1B */}
+      {/* Race to 1M holders */}
       <Card>
         <div className="flex items-center justify-between">
-          <h2 className="disp text-xl">
+          <h2 className="disp text-xl uppercase">
             <span className="text-ink-primary">race to </span>
-            <span className="text-green">$1b</span>
+            <span className="text-green">1m holders</span>
           </h2>
           <span className="flex items-center gap-1.5 text-xs text-red">
             <LiveDot color="red" /> live
@@ -35,16 +34,16 @@ export default function Landing() {
 
         <div className="mt-4 space-y-4">
           <RaceMetric
-            title="market cap"
-            goalLabel="goal $1b"
-            ansem={{ value: formatUsd(market.ansemMarketCap, true), pct: (market.ansemMarketCap / MARKET_CAP_GOAL) * 100 }}
-            pump={{ value: formatUsd(market.pumpMarketCap, true), pct: (market.pumpMarketCap / MARKET_CAP_GOAL) * 100 }}
-          />
-          <RaceMetric
             title="holders"
             goalLabel="goal 1m"
             ansem={{ value: formatNumber(market.ansemHolders), pct: (market.ansemHolders / HOLDER_GOAL) * 100 }}
             pump={{ value: formatNumber(mockRace.pump.holders), pct: (mockRace.pump.holders / HOLDER_GOAL) * 100 }}
+          />
+          <RaceMetric
+            title="market cap"
+            goalLabel="goal $1b"
+            ansem={{ value: formatUsd(market.ansemMarketCap, true), pct: (market.ansemMarketCap / MARKET_CAP_GOAL) * 100 }}
+            pump={{ value: formatUsd(market.pumpMarketCap, true), pct: (market.pumpMarketCap / MARKET_CAP_GOAL) * 100 }}
           />
         </div>
       </Card>
@@ -108,16 +107,11 @@ export default function Landing() {
         </a>
       </Card>
 
+      {/* Price chart */}
+      <PriceChart pairAddress={market.ansemPairAddress} />
+
       {/* Swap widget */}
       <SwapWidget />
-
-      {/* CTA */}
-      <button
-        onClick={() => setVisible(true)}
-        className="disp w-full rounded-pill bg-green py-4 text-base text-black"
-      >
-        connect wallet to join the trenches
-      </button>
     </div>
   )
 }

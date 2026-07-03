@@ -84,7 +84,7 @@ export default function Admin() {
   if (!connected) {
     return (
       <div className="space-y-4">
-        <h1 className="disp text-2xl text-ink-primary">admin review</h1>
+        <h1 className="disp text-2xl uppercase text-ink-primary">admin review</h1>
         <button onClick={() => setVisible(true)} className="disp rounded-pill bg-green px-4 py-1.5 text-sm text-black">
           connect wallet
         </button>
@@ -95,7 +95,7 @@ export default function Admin() {
   return (
     <div className="space-y-4">
       <div className="flex items-baseline justify-between">
-        <h1 className="disp text-2xl text-ink-primary">admin review</h1>
+        <h1 className="disp text-2xl uppercase text-ink-primary">admin review</h1>
         <button onClick={() => void load()} className="text-xs text-cyan hover:underline">
           refresh
         </button>

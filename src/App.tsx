@@ -4,7 +4,7 @@ import Landing from './pages/Landing'
 import Dashboard from './pages/Dashboard'
 import Leaderboard from './pages/Leaderboard'
 import Airdrops from './pages/Airdrops'
-import Creators from './pages/Creators'
+import CreatorsComingSoon from './pages/CreatorsComingSoon'
 import Admin from './pages/Admin'
 
 export default function App() {
@@ -16,7 +16,7 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/airdrops" element={<Airdrops />} />
-          <Route path="/creators" element={<Creators />} />
+          <Route path="/creators" element={<CreatorsComingSoon />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>

@@ -14,6 +14,7 @@ export interface Market {
   pumpMarketCap: number
   ansemVolume24h: number
   ansemHolders: number
+  ansemPairAddress: string | null
   live: boolean
 }
 
@@ -28,6 +29,7 @@ const fallback: Market = {
   pumpMarketCap: mockRace.pump.marketCap,
   ansemVolume24h: mockGlobal.volume24h,
   ansemHolders: mockGlobal.holders,
+  ansemPairAddress: null,
   live: false,
 }
 
@@ -95,6 +97,7 @@ export function MarketProvider({ children }: { children: ReactNode }) {
         pumpMarketCap: snap?.pump?.marketCap ?? prev.pumpMarketCap,
         ansemVolume24h: snap?.ansem?.volume24h ?? prev.ansemVolume24h,
         ansemHolders: holderCount ?? prev.ansemHolders,
+        ansemPairAddress: snap?.ansem?.pairAddress ?? prev.ansemPairAddress,
       }))
     }
     load()

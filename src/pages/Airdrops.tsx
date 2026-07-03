@@ -49,7 +49,7 @@ export default function Airdrops() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h1 className="disp text-2xl text-ink-primary">live airdrops</h1>
+        <h1 className="disp text-2xl uppercase text-ink-primary">live airdrops</h1>
         <span className="flex items-center gap-1.5 text-xs text-red">
           <LiveDot color="red" /> ansem is sending
         </span>
