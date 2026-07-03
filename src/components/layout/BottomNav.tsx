@@ -19,7 +19,7 @@ export function BottomNav() {
           to={t.to}
           end={t.end}
           className={({ isActive }) =>
-            cn('disp px-4 py-1 text-sm', isActive ? 'text-green' : 'text-ink-faint')
+            cn('disp px-4 py-1 text-sm uppercase', isActive ? 'text-green' : 'text-ink-faint')
           }
         >
           {t.label}

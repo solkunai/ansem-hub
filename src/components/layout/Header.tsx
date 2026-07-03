@@ -33,7 +33,7 @@ export function Header() {
             to={l.to}
             end={l.end}
             className={({ isActive }) =>
-              cn('text-sm', isActive ? 'text-green' : 'text-ink-secondary hover:text-ink-primary')
+              cn('text-sm uppercase tracking-wide', isActive ? 'text-green' : 'text-ink-secondary hover:text-ink-primary')
             }
           >
             {l.label}
