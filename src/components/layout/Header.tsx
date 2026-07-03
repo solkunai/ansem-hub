@@ -9,6 +9,7 @@ const navLinks = [
   { to: '/dashboard', label: 'dashboard', end: false },
   { to: '/leaderboard', label: 'leaderboard', end: false },
   { to: '/airdrops', label: 'airdrops', end: false },
+  { to: '/creators', label: 'creators', end: false },
 ]
 
 export function Header() {
@@ -16,7 +17,7 @@ export function Header() {
   const { setVisible } = useWalletModal()
 
   return (
-    <header className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b border-line bg-panel/90 px-4 py-3 backdrop-blur sm:px-6">
+    <header className="flex items-center justify-between gap-3 border-b border-line bg-panel/90 px-4 py-3 backdrop-blur sm:px-6">
       <Link to="/" className="flex items-center gap-2">
         <img src="/bull-logo.png" alt="" className="h-7 w-7 rounded-md" />
         <span className="disp text-lg tracking-tight">

@@ -1,6 +1,6 @@
 import { corsHeaders } from '../_shared/cors.ts'
+import { ANSEM_MINT } from '../_shared/constants.ts'
 
-const ANSEM_MINT = '9cRCn9rGT8V2imeM2BaKs13yhMEais3ruM3rPvTGpump'
 const HELIUS_RPC_URL = Deno.env.get('HELIUS_RPC_URL')
 const BASE58 = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/
 

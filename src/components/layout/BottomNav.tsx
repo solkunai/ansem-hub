@@ -8,6 +8,7 @@ export function BottomNav() {
     { to: connected ? '/dashboard' : '/', label: 'home', end: true },
     { to: '/leaderboard', label: 'ranks', end: false },
     { to: '/airdrops', label: 'feed', end: false },
+    { to: '/creators', label: 'creators', end: false },
   ]
 
   return (

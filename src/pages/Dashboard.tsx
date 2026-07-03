@@ -2,18 +2,20 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import { Card } from '../components/ui/Card'
 import { Sparkline } from '../components/Sparkline'
 import { useHolderVerification } from '../hooks/useHolderVerification'
-import { mockWallet, mockGlobal } from '../lib/mock'
+import { useMarket } from '../providers/MarketProvider'
+import { mockWallet } from '../lib/mock'
 import { formatNumber, formatUsd, formatPercent, shortenAddress } from '../lib/format'
 
 export default function Dashboard() {
   const w = mockWallet
   const { publicKey } = useWallet()
   const { balance, loading } = useHolderVerification()
+  const market = useMarket()
 
   const isLive = balance != null
   const address = publicKey?.toBase58() ?? w.address
   const bal = isLive ? balance : w.balance
-  const valueUsd = isLive ? balance * mockGlobal.ansemPrice : w.valueUsd
+  const valueUsd = isLive ? balance * market.ansemPrice : w.valueUsd
 
   return (
     <div className="space-y-4">

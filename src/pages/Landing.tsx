@@ -5,14 +5,19 @@ import { ProgressBar } from '../components/ui/ProgressBar'
 import { StatCell } from '../components/ui/StatCell'
 import { SwapWidget } from '../components/SwapWidget'
 import { useCountUp } from '../hooks/useCountUp'
-import { mockGlobal, mockRace, mockCreator } from '../lib/mock'
+import { useCreatorHoldings } from '../hooks/useCreatorHoldings'
+import { useMarket } from '../providers/MarketProvider'
+import { mockGlobal, mockRace } from '../lib/mock'
 import { ANSEM_CREATOR_WALLET, HOLDER_GOAL, MARKET_CAP_GOAL } from '../lib/ansem'
 import { formatNumber, formatCompact, formatUsd, shortenAddress } from '../lib/format'
 
 export default function Landing() {
   const { setVisible } = useWalletModal()
-  const holders = useCountUp(mockGlobal.holders)
+  const market = useMarket()
+  const creator = useCreatorHoldings()
+  const holders = useCountUp(market.ansemHolders)
   const holderPct = (holders / HOLDER_GOAL) * 100
+  const athMc = Math.max(mockGlobal.athMarketCap, market.ansemMarketCap)
 
   return (
     <div className="space-y-4">
@@ -32,13 +37,13 @@ export default function Landing() {
           <RaceMetric
             title="market cap"
             goalLabel="goal $1b"
-            ansem={{ value: formatUsd(mockRace.ansem.marketCap, true), pct: (mockRace.ansem.marketCap / MARKET_CAP_GOAL) * 100 }}
-            pump={{ value: formatUsd(mockRace.pump.marketCap, true), pct: (mockRace.pump.marketCap / MARKET_CAP_GOAL) * 100 }}
+            ansem={{ value: formatUsd(market.ansemMarketCap, true), pct: (market.ansemMarketCap / MARKET_CAP_GOAL) * 100 }}
+            pump={{ value: formatUsd(market.pumpMarketCap, true), pct: (market.pumpMarketCap / MARKET_CAP_GOAL) * 100 }}
           />
           <RaceMetric
             title="holders"
             goalLabel="goal 1m"
-            ansem={{ value: formatNumber(mockRace.ansem.holders), pct: (mockRace.ansem.holders / HOLDER_GOAL) * 100 }}
+            ansem={{ value: formatNumber(market.ansemHolders), pct: (market.ansemHolders / HOLDER_GOAL) * 100 }}
             pump={{ value: formatNumber(mockRace.pump.holders), pct: (mockRace.pump.holders / HOLDER_GOAL) * 100 }}
           />
         </div>
@@ -49,9 +54,9 @@ export default function Landing() {
         <img
           src="/black-bull.jpg"
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-top opacity-70 animate-breathe"
+          className="absolute inset-0 h-full w-full object-cover object-top animate-breathe"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/70 to-bg/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/20 to-transparent" />
         <div className="relative flex min-h-[280px] flex-col justify-end p-5">
           <span className="flex items-center gap-2 text-xs uppercase tracking-wider text-ink-secondary">
             <LiveDot color="green" /> the trenches are live
@@ -67,8 +72,8 @@ export default function Landing() {
       {/* Stat strip */}
       <div className="grid grid-cols-2 gap-px overflow-hidden rounded-cell bg-line sm:grid-cols-4">
         <StatCell label="24h holders" value={`+${formatNumber(mockGlobal.holders24h)}`} valueClassName="text-green" />
-        <StatCell label="market cap" value={formatUsd(mockGlobal.marketCap, true)} />
-        <StatCell label="ath mc" value={formatUsd(mockGlobal.athMarketCap, true)} />
+        <StatCell label="market cap" value={formatUsd(market.ansemMarketCap, true)} />
+        <StatCell label="ath mc" value={formatUsd(athMc, true)} />
         <StatCell label="drops today" value={formatCompact(mockGlobal.airdropsToday)} valueClassName="text-red" />
       </div>
 
@@ -86,13 +91,13 @@ export default function Landing() {
         </div>
 
         <div className="mt-4 flex items-end justify-between">
-          <div className="disp tnum text-4xl text-green">{mockCreator.percentSupply}%</div>
+          <div className="disp tnum text-4xl text-green">{creator.percentSupply.toFixed(1)}%</div>
           <div className="text-right">
-            <div className="tnum text-sm text-ink-primary">{formatCompact(mockCreator.balance)} ANSEM</div>
-            <div className="tnum text-xs text-ink-muted">{formatUsd(mockCreator.valueUsd, true)}</div>
+            <div className="tnum text-sm text-ink-primary">{formatCompact(creator.balance)} ANSEM</div>
+            <div className="tnum text-xs text-ink-muted">{formatUsd(creator.balance * market.ansemPrice, true)}</div>
           </div>
         </div>
-        <ProgressBar percent={mockCreator.percentSupply} className="mt-3" />
+        <ProgressBar percent={creator.percentSupply} className="mt-3" />
         <a
           href={`https://solscan.io/account/${ANSEM_CREATOR_WALLET}`}
           target="_blank"
@@ -136,7 +141,7 @@ function RaceMetric({
       </div>
       <div className="mt-2 space-y-2">
         <RaceBar logo="/bull-logo.png" ticker="ansem" value={ansem.value} pct={ansem.pct} tone="green" />
-        <RaceBar logo="/pump-logo.jpeg" ticker="pump" value={pump.value} pct={pump.pct} tone="red" />
+        <RaceBar logo="/pump-logo.jpeg" ticker="pump" value={pump.value} pct={pump.pct} tone="white" />
       </div>
     </div>
   )
@@ -153,7 +158,7 @@ function RaceBar({
   ticker: string
   value: string
   pct: number
-  tone: 'green' | 'red'
+  tone: 'green' | 'white'
 }) {
   return (
     <div className="grid grid-cols-[72px_1fr_auto] items-center gap-3">
@@ -161,8 +166,8 @@ function RaceBar({
         <img src={logo} alt="" className="h-4 w-4 rounded-full" />
         <span className="disp text-xs text-ink-secondary">{ticker}</span>
       </div>
-      <ProgressBar percent={pct} striped fillClassName={tone === 'green' ? 'bg-green' : 'bg-red'} />
-      <span className={`disp tnum text-right text-sm ${tone === 'green' ? 'text-green' : 'text-red'}`}>{value}</span>
+      <ProgressBar percent={pct} striped fillClassName={tone === 'green' ? 'bg-green' : 'bg-white'} />
+      <span className={`disp tnum text-right text-sm ${tone === 'green' ? 'text-green' : 'text-white'}`}>{value}</span>
     </div>
   )
 }

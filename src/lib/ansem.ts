@@ -1,6 +1,13 @@
 export const ANSEM_MINT = '9cRCn9rGT8V2imeM2BaKs13yhMEais3ruM3rPvTGpump'
 export const PUMP_MINT = 'pumpCmXqMfrsAkQ5r49WcJnRayYRqmXz6ae8H7H9Dfn'
+export const WSOL_MINT = 'So11111111111111111111111111111111111111112'
 export const ANSEM_CREATOR_WALLET = 'GV6UUmNxz2RpKxmNAPadYKb7uQpszwqQAu3qLJxVdC52'
+
+// Platform fee collection wallet for swaps executed through the ANSEM Hub
+// widget. Jupiter takes the fee in the swap's output token, so this wallet
+// ends up holding a mix of wrapped SOL and ANSEM depending on swap direction.
+export const SWAP_FEE_WALLET = '52d5UyD4EzAkkswf81SD2vHKHQNxKpgxHzZTASpmBDxD'
+export const SWAP_FEE_BPS = 100 // 1%
 
 export const ANSEM_TOTAL_SUPPLY = 1_000_000_000
 
