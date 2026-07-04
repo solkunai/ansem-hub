@@ -36,7 +36,13 @@ Deno.serve(async (req) => {
 
     const db = createClient(SUPABASE_URL, SERVICE_ROLE_KEY)
 
-    let before: string | undefined
+    // Optional resume cursor so a run that hits a rate limit partway through
+    // can be continued from where it left off, instead of only ever walking
+    // the most recent history.
+    const body = await req.text()
+    const parsed = body ? (JSON.parse(body) as { before?: string }) : {}
+
+    let before: string | undefined = parsed.before
     let totalFetched = 0
     let totalInserted = 0
     let pages = 0
