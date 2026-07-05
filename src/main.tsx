@@ -1,6 +1,7 @@
 import './polyfills'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Analytics } from '@vercel/analytics/react'
 import App from './App'
 import { SolanaProviders } from './providers/WalletProvider'
 import { MarketProvider } from './providers/MarketProvider'
@@ -16,5 +17,6 @@ createRoot(document.getElementById('root')!).render(
         <App />
       </MarketProvider>
     </SolanaProviders>
+    <Analytics />
   </StrictMode>,
 )
