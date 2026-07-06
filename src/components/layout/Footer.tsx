@@ -24,6 +24,18 @@ export function Footer() {
         <span>{shortenAddress(DEV_DONATION_WALLET)}</span>
         <span className={copied ? 'text-green' : 'text-ink-muted'}>{copied ? 'copied ✓' : 'copy ⧉'}</span>
       </button>
+
+      <div className="mt-4 text-center text-xs text-ink-muted">
+        dev:{' '}
+        <a
+          href="https://x.com/KunaiSol"
+          target="_blank"
+          rel="noreferrer"
+          className="text-ink-primary hover:text-green"
+        >
+          @KunaiSol
+        </a>
+      </div>
     </div>
   )
 }
